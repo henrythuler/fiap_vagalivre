@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_button">#FF027BFF</color>
     <color name="input_gray">#FF868686</color>
+    <color name="text_gray">#FF6B5E5E</color>
+    <color name="text_blue">#FF0386D0</color>
 </resources>

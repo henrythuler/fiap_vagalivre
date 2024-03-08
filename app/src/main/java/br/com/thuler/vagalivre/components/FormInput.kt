@@ -3,6 +3,7 @@ package br.com.thuler.vagalivre.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -52,7 +53,11 @@ fun FormInput(
             )
         },
         leadingIcon = {
-            androidx.compose.material3.Icon(painter = painterResource(id = icon), contentDescription = "Ícone do formulário")
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = "Ícone do formulário",
+                tint = Color(0XFF878787)
+            )
         },
         shape = RoundedCornerShape(16.dp)
     )

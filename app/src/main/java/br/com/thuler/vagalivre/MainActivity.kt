@@ -33,6 +33,8 @@ import br.com.thuler.vagalivre.components.Header
 import br.com.thuler.vagalivre.components.ParkInfo
 import br.com.thuler.vagalivre.components.RectangularButton
 import br.com.thuler.vagalivre.components.UserPhoto
+import br.com.thuler.vagalivre.screens.LoginScreen
+import br.com.thuler.vagalivre.screens.LoginScreenViewModel
 import br.com.thuler.vagalivre.ui.theme.VagaLivreTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting()
+                    LoginScreen(viewModel = LoginScreenViewModel())
                 }
             }
         }
