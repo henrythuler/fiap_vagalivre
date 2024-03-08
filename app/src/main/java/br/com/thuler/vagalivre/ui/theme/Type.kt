@@ -10,7 +10,7 @@ import br.com.thuler.vagalivre.R
 
 val Roboto = FontFamily(
     Font(R.font.roboto_regular, FontWeight.Normal),
-    Font(R.font.roboto_bold, FontWeight.Bold)
+    Font(R.font.roboto_bold, FontWeight.Bold),
 )
 
 val Baumans = FontFamily(

@@ -1,5 +1,7 @@
 package br.com.thuler.vagalivre.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -20,14 +22,16 @@ fun RectangularButton(
     text: String,
     onClick: () -> Unit,
     fontSize: TextUnit,
-    fontWeight: FontWeight
+    fontWeight: FontWeight,
+    border: BorderStroke?
 ){
 
     Button(
         modifier = modifier,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.blue_button)),
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(20.dp),
+        border = border
     ) {
 
         Text(
