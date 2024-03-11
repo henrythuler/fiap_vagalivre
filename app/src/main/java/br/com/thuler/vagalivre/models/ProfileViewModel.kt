@@ -1,10 +1,10 @@
-package br.com.thuler.vagalivre.screens
+package br.com.thuler.vagalivre.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DadosScreenViewModel : ViewModel() {
+class ProfileViewModel : ViewModel() {
 
     private val _nome = MutableLiveData<String>()
     val nome: LiveData<String> = _nome

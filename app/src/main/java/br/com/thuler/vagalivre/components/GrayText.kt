@@ -9,7 +9,7 @@ import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
-fun GrayText(modifier: Modifier = Modifier, text: String, size: TextUnit) {
+fun GrayText(text: String, size: TextUnit) {
 
     Text(
         modifier = Modifier,

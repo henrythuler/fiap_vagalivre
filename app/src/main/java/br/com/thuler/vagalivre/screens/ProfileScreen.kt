@@ -1,7 +1,6 @@
 package br.com.thuler.vagalivre.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,23 +18,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.CameraButton
 import br.com.thuler.vagalivre.components.CircleButton
 import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.Header
 import br.com.thuler.vagalivre.components.UserPhoto
+import br.com.thuler.vagalivre.models.ProfileViewModel
 
 @Composable
-fun DadosScreen(viewModel: DadosScreenViewModel) {
-
-    Header("Dados Pessoais")
-
+fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
 
     val nome by viewModel.nome.observeAsState("")
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        Header(title = "Dados Pessoais", onClick = {
+            navController.navigate("home")
+        })
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -75,7 +79,20 @@ fun DadosScreen(viewModel: DadosScreenViewModel) {
 
             }
 
-            CircleButton(80.dp, Icons.Outlined.Check, Color.White) {}
-            }
+            CircleButton(
+                size = 80.dp,
+                icon = Icons.Outlined.Check,
+                color = Color.White,
+                onClick = {
+                    navController.navigate("home")
+                }
+            )
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun ProfileScreenPreview() {
+    ProfileScreen(viewModel = ProfileViewModel(), navController =  rememberNavController())
+}

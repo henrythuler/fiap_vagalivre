@@ -22,12 +22,12 @@ import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
-fun Header(title: String) {
+fun Header(title: String, onClick: () -> Unit) {
 
-    Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp)){
+    Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 20.dp)){
 
         Row(
-            modifier = Modifier.clickable { /* TO DO VOLTAR*/ },
+            modifier = Modifier.clickable { onClick() },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {

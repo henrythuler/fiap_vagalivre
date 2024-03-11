@@ -25,17 +25,21 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.AppLogo
 import br.com.thuler.vagalivre.components.BlueText
 import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.GrayText
 import br.com.thuler.vagalivre.components.RectangularButton
+import br.com.thuler.vagalivre.models.LoginViewModel
 
 @Composable
-fun LoginScreen(viewModel: LoginScreenViewModel) {
+fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
 
     val email by viewModel.email.observeAsState("")
     val password by viewModel.password.observeAsState("")
@@ -110,7 +114,7 @@ fun LoginScreen(viewModel: LoginScreenViewModel) {
                 RectangularButton(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Acessar",
-                    onClick = {},
+                    onClick = { navController.navigate("home") },
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
                     border = BorderStroke(1.dp, Color.Black)
@@ -178,5 +182,10 @@ fun LoginScreen(viewModel: LoginScreenViewModel) {
         }
 
     }
+}
 
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun LoginScreenPreview() {
+    LoginScreen(viewModel = LoginViewModel(), navController = rememberNavController())
 }
