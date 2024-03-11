@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "home") { HomeScreen(navController) }
                         composable(route = "profile") { ProfileScreen(viewModel = ProfileViewModel(), navController = navController) }
                         composable(route = "settings") { SettingsScreen(navController) }
-                        composable(route = "parkinng") { ParkingScreen(navController) }
+                        composable(route = "parking") { ParkingScreen(navController) }
                     }
                 }
             }
