@@ -14,6 +14,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.thuler.vagalivre.R
@@ -59,7 +60,13 @@ fun FormInput(
                 tint = Color(0XFF878787)
             )
         },
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(12.dp)
     )
     
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FormInputPreview() {
+    FormInput(value = "", onValueChange = {}, label = "Email", icon = R.drawable.outline_email_24, keyboardType = KeyboardType.Email)
 }
