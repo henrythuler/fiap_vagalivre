@@ -67,5 +67,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.compose.runtime:runtime-livedata:latest")
+    implementation(libs.androidx.runtime.livedata)
+
+    // Dependência do Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Dependência da animação
+//    implementation(libs.accompanist.navigation.animation)
 }
