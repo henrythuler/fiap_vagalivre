@@ -13,6 +13,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.ui.theme.Roboto
 
@@ -35,12 +36,11 @@ fun RectangularButton(
         border = border,
     ) {
 
-        Text(
+        AppText(
             text = text,
-            color = Color.White,
-            fontWeight = fontWeight,
-            fontSize = fontSize,
-            fontFamily = Roboto
+            size = fontSize,
+            color = R.color.white,
+            weight = fontWeight
         )
 
     }

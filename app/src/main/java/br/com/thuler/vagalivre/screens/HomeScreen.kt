@@ -39,6 +39,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.AppLogo
+import br.com.thuler.vagalivre.components.AppText
 import br.com.thuler.vagalivre.components.RectangularButton
 import br.com.thuler.vagalivre.components.SmallIconButton
 import br.com.thuler.vagalivre.components.UserPhoto
@@ -98,12 +99,17 @@ fun HomeScreen(navController: NavController) {
 
 
                 // Header
-                Row(modifier = Modifier
-                    .fillMaxWidth(),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    SmallIconButton(type = "settings", onClickAction = { navController.navigate("settings") } )
-                    SmallIconButton(type = "close", onClickAction = { dockIsVisible = false; menuIsVisible = true } )
+                    SmallIconButton(
+                        type = "settings",
+                        onClickAction = { navController.navigate("settings") })
+                    SmallIconButton(
+                        type = "close",
+                        onClickAction = { dockIsVisible = false; menuIsVisible = true })
                 }
 
 
@@ -111,10 +117,11 @@ fun HomeScreen(navController: NavController) {
                 Column {
 
                     // TÍTULO
-                    Column(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(55.dp)
-                        .padding(horizontal = 15.dp),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(55.dp)
+                            .padding(horizontal = 15.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -131,9 +138,10 @@ fun HomeScreen(navController: NavController) {
                     }
 
                     // FOTO
-                    Column(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(284.dp),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(284.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -142,15 +150,18 @@ fun HomeScreen(navController: NavController) {
                             size = 100.dp
                         )
 
-                        Text(
+                        AppText(
                             modifier = Modifier.padding(top = 10.dp, bottom = 15.dp),
                             text = "João dos Santos Silva",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold
+                            size = 14.sp,
+                            color = R.color.black,
+                            weight = FontWeight.Bold
                         )
 
                         RectangularButton(
-                            modifier = Modifier.width(80.dp).height(25.dp),
+                            modifier = Modifier
+                                .width(80.dp)
+                                .height(25.dp),
                             text = "Editar",
                             onClick = { navController.navigate("profile") },
                             fontSize = 12.sp,
@@ -162,10 +173,11 @@ fun HomeScreen(navController: NavController) {
 
 
                     // VERSÃO
-                    Column(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(25.dp)
-                        .padding(horizontal = 15.dp),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(25.dp)
+                            .padding(horizontal = 15.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -178,30 +190,38 @@ fun HomeScreen(navController: NavController) {
                                 )
                                 .fillMaxWidth()
                         )
-                        Text(text = "VERSÃO 1.0.0", fontSize = 8.sp, fontWeight = FontWeight.Medium)
+
+                        AppText(
+                            text = "VERSÃO 1.0.0",
+                            size = 8.sp,
+                            color = R.color.black,
+                            weight = FontWeight.Bold
+                        )
                     }
+
                 }
 
 
                 // Footer
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { navController.navigate("login") },
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { navController.navigate("login") },
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(modifier = Modifier.width(50.dp)) {
-                        SmallIconButton(type = "logout", onClickAction = { } )
+                        SmallIconButton(type = "logout", onClickAction = { })
                     }
                     Row(modifier = Modifier.width(50.dp)) {
-                        Text(text = "Sair", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        AppText(text = "Sair", size = 14.sp, color = R.color.black, weight =FontWeight.Bold )
                     }
                 }
 
-
-
             }
+
     }
+
 }
 
 @Preview(showSystemUi = true, showBackground = true)

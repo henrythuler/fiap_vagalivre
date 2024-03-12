@@ -43,24 +43,16 @@ fun Header(title: String, onClick: () -> Unit) {
                 contentDescription = "Ícone de voltar página",
                 tint = colorResource(id = R.color.blue_button)
             )
-            Text(
+            AppText(
                 text = "Voltar",
-                color = colorResource(id = R.color.blue_button),
-                fontSize = 16.sp,
-                fontFamily = Roboto,
+                size = 16.sp,
+                color = R.color.blue_button,
+                weight = FontWeight.Normal
             )
         }
 
         Row(modifier = Modifier.height(25.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = title,
-                textAlign = TextAlign.Center,
-                color = Color.Black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = Roboto
-            )
+            Title(size = 16.sp, title = title, textAlign = TextAlign.Center)
         }
 
 

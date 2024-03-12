@@ -14,8 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
@@ -36,11 +38,11 @@ fun ParkInfo(icon: Int, info: String) {
         
         Spacer(modifier = Modifier.width(4.dp))
 
-        Text(
+        AppText(
             text = info,
-            color = Color(0xFF857D7D),
-            fontSize = 14.sp,
-            fontFamily = Roboto
+            size = 14.sp,
+            color = R.color.text_park_info,
+            weight = FontWeight.Normal
         )
         
     }

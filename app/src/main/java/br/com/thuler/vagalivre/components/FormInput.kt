@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,11 +47,11 @@ fun FormInput(
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         label = {
-            Text(
+            AppText(
                 text = label,
-                fontSize = 14.sp,
-                color = Color.Black,
-                fontFamily = Roboto
+                size = 14.sp,
+                color = R.color.black,
+                weight = FontWeight.Normal
             )
         },
         leadingIcon = {

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
+import br.com.thuler.vagalivre.components.AppText
 import br.com.thuler.vagalivre.components.CircleButton
 import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.Header
@@ -60,7 +62,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
 
                     Box(modifier = Modifier
                         .size(100.dp)
-                        .clickable {  }
+                        .clickable { }
                     ){
                         UserPhoto(
                             photo = R.drawable.foto,
@@ -80,12 +82,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
                         .padding(top = 10.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = "joao@email.com",
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 16.sp,
-                            fontFamily = Roboto
-                        )
+                        AppText(text = "joao@email.com", size = 16.sp, color = R.color.black, weight = FontWeight.Normal)
                     }
                 }
 

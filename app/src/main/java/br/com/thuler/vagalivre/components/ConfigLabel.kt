@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
@@ -31,12 +32,11 @@ fun ConfigLabel(icon: Int, title: String) {
         
         Spacer(modifier = Modifier.width(12.dp))
 
-        Text(
+        AppText(
             text = title,
-            fontWeight = FontWeight.Bold,
-            fontFamily = Roboto,
-            fontSize = 16.sp,
-            color = Color.Black
+            size = 16.sp,
+            color = R.color.black,
+            weight = FontWeight.Bold
         )
         
     }

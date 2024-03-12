@@ -32,9 +32,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.AppLogo
-import br.com.thuler.vagalivre.components.BlueText
+import br.com.thuler.vagalivre.components.AppText
 import br.com.thuler.vagalivre.components.FormInput
-import br.com.thuler.vagalivre.components.GrayText
 import br.com.thuler.vagalivre.components.RectangularButton
 import br.com.thuler.vagalivre.models.LoginViewModel
 
@@ -93,18 +92,22 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                                 checkmarkColor = Color.White
                             )
                         )
-                        
-                        GrayText(
+
+                        AppText(
                             text = "Lembrar senha",
-                            size = 16.sp
+                            size = 16.sp,
+                            color = R.color.text_gray,
+                            weight = FontWeight.Normal
                         )
 
                     }
-                    
-                    BlueText(
+
+                    AppText(
                         modifier = Modifier.padding(end = 16.dp),
                         text = "Esqueci a senha",
                         size = 16.sp,
+                        color = R.color.text_blue,
+                        weight = FontWeight.Normal
                     )
 
                 }
@@ -127,10 +130,12 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                
-                GrayText(
+
+                AppText(
                     text = "ou acesse com",
-                    size = 16.sp
+                    size = 16.sp,
+                    color = R.color.text_gray,
+                    weight = FontWeight.Normal
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -171,10 +176,12 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 }
                 
                 Spacer(modifier = Modifier.height(32.dp))
-                
-                BlueText(
+
+                AppText(
                     text = "Acessar sem uma conta",
-                    size = 16.sp
+                    size = 16.sp,
+                    color = R.color.text_blue,
+                    weight = FontWeight.Normal
                 )
                 
             }
