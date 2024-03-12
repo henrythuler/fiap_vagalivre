@@ -1,14 +1,17 @@
 package br.com.thuler.vagalivre.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,19 +19,21 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
-import br.com.thuler.vagalivre.components.CameraButton
 import br.com.thuler.vagalivre.components.CircleButton
 import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.Header
 import br.com.thuler.vagalivre.components.UserPhoto
 import br.com.thuler.vagalivre.models.ProfileViewModel
+import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
 fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
@@ -42,44 +47,71 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
         })
 
         Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 15.dp, horizontal = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top){
+            .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-            Spacer(modifier = Modifier.height(70.dp))
-            UserPhoto(
-                photo = R.drawable.foto,
-                size = 100.dp
-            )
+            Column(modifier = Modifier
+                .fillMaxHeight(0.6f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 
-            CameraButton(icon = R.drawable.ic_launcher_camera_foreground,
-                )
+                    Box(modifier = Modifier
+                        .size(100.dp)
+                        .clickable {  }
+                    ){
+                        UserPhoto(
+                            photo = R.drawable.foto,
+                            size = 100.dp
+                        )
+                        Icon(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .align(Alignment.BottomEnd),
+                            painter = painterResource(id = R.drawable.ic_launcher_camera_foreground),
+                            contentDescription = "Ícone de camera",
+                        )
+                    }
 
-            Spacer(modifier = Modifier.height(5.dp))
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "joao@email.com",
+                            fontStyle = FontStyle.Italic,
+                            fontSize = 16.sp,
+                            fontFamily = Roboto
+                        )
+                    }
+                }
 
-            Text(text = "joao@email.com",
-                fontWeight = FontWeight.Bold
-            )
 
-            Spacer(modifier = Modifier.height(60.dp))
-
-            //Form Column
-            Column(modifier = Modifier.fillMaxWidth()) {
-
-                FormInput(
-                    value = nome,
-                    onValueChange = {viewModel.onNomeChange(it)},
-                    label = "Nome",
-                    icon = R.drawable.baseline_account_circle_24,
-                    keyboardType = KeyboardType.Text
-                )
-
-                Spacer(modifier = Modifier.height(200.dp))
-
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
+                    .padding(top = 35.dp)) {
+                    FormInput(
+                        value =  nome,
+                        onValueChange = {viewModel.onNomeChange(it)},
+                        label = "Nome",
+                        icon = R.drawable.baseline_account_circle_24,
+                        keyboardType = KeyboardType.Text
+                    )
+                }
             }
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(1f)
+                .padding(end = 30.dp, bottom = 30.dp),
+                verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.End
+            ) {
 
-            CircleButton(
+                CircleButton(
                 size = 80.dp,
                 icon = Icons.Outlined.Check,
                 color = Color.White,
@@ -87,6 +119,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
                     navController.navigate("home")
                 }
             )
+            }
         }
     }
 }
