@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +42,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.AppLogo
 import br.com.thuler.vagalivre.components.AppText
+import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.RectangularButton
 import br.com.thuler.vagalivre.components.SmallIconButton
 import br.com.thuler.vagalivre.components.UserPhoto
@@ -48,8 +51,10 @@ import br.com.thuler.vagalivre.components.UserPhoto
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    var dockIsVisible by remember { mutableStateOf(false) }
+    var dockIsVisible by remember { mutableStateOf(true) }
     var menuIsVisible by remember { mutableStateOf(true) }
+    var search by remember { mutableStateOf("") }
+
 
     // Mapa
     Box(modifier = Modifier
@@ -83,6 +88,32 @@ fun HomeScreen(navController: NavController) {
                 Text(text = "R$5", fontSize = 12.sp, maxLines = 1)
             }
         }
+
+        // Barra de pesquisa
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.BottomCenter)
+            .background(Color(0xBBFFFFFF))
+
+        ) {
+            FormInput(
+                modifier = Modifier
+                    .padding(horizontal = 15.dp, vertical = 7.dp),
+                value = search,
+                onValueChange = { search = it},
+                label = "Procurar",
+                icon = R.drawable.outline_email_24,
+                trailing = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.my_location_24px),
+                        contentDescription = "Minha localização",
+                        tint = Color(0XFF878787),
+                        modifier = Modifier.clickable {  }
+                    )
+                },
+                keyboardType = KeyboardType.Ascii
+            )
+        }
     }
 
     // Painel lateral
@@ -93,7 +124,7 @@ fun HomeScreen(navController: NavController) {
                     .fillMaxHeight()
                     .fillMaxWidth()
                     .padding(end = 200.dp)
-                    .background(Color(0xBBFFFFFF)),
+                    .background(Color(0xE6F0F0F0)),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
