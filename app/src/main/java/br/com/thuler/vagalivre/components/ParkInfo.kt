@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,27 +22,24 @@ import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
-fun ParkInfo(icon: Int, info: String) {
+fun ParkInfo(icon: Int, info: String, textColor: Int = R.color.text_park_info) {
 
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 8.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
 
         Icon(
             modifier = Modifier.size(32.dp),
             painter = painterResource(id = icon),
             contentDescription = "Ícone de informação",
-            tint = Color(0XFF1C48A8)
+            tint = colorResource(id = R.color.text_park_info_blue)
         )
         
         Spacer(modifier = Modifier.width(4.dp))
 
         AppText(
+            modifier = Modifier.padding(start = 4.dp),
             text = info,
             size = 14.sp,
-            color = R.color.text_park_info,
+            color = textColor,
             weight = FontWeight.Normal
         )
         
