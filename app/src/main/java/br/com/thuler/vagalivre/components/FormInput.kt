@@ -6,7 +6,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,15 +22,17 @@ import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
 fun FormInput(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
     icon: Int,
+    trailing: @Composable (() -> Unit)? = null,
     keyboardType: KeyboardType
 ) {
     
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
         colors = OutlinedTextFieldDefaults.colors(
@@ -61,6 +62,7 @@ fun FormInput(
                 tint = Color(0XFF878787)
             )
         },
+        trailingIcon = trailing,
         shape = RoundedCornerShape(12.dp)
     )
     
