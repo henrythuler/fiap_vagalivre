@@ -12,5 +12,6 @@
     <color name="text_gray">#FF6B5E5E</color>
     <color name="text_blue">#FF0386D0</color>
     <color name="text_park_info">#FF857D7D</color>
+    <color name="text_park_info_blue">#FF1C48A8</color>
     <color name="text_park_detail_green">#FF008037</color>
 </resources>

@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import br.com.thuler.vagalivre.R
+import br.com.thuler.vagalivre.components.ConfigLabel
 import br.com.thuler.vagalivre.components.Header
 
 @Composable
