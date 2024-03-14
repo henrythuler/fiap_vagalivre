@@ -1,6 +1,5 @@
 package br.com.thuler.vagalivre.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SmallIconButton(type: String, onClickAction: () -> Unit) {
+fun SmallIcon(type: String) {
 
     var modifier = Modifier.size(50.dp, 50.dp).padding(14.dp)
 
@@ -37,8 +36,7 @@ fun SmallIconButton(type: String, onClickAction: () -> Unit) {
     }
 
 
-    Row(modifier = modifier
-        .clickable { onClickAction() },
+    Row(modifier = modifier,
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -54,5 +52,5 @@ fun SmallIconButton(type: String, onClickAction: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun SmallIconPreview() {
-    SmallIconButton(type = "logout", onClickAction = {})
+    SmallIcon(type = "logout")
 }

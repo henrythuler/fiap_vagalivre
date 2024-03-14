@@ -8,11 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,24 +19,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.thuler.vagalivre.R
-import br.com.thuler.vagalivre.ui.theme.Roboto
 
 @Composable
 fun Header(title: String, onClick: () -> Unit) {
 
     Box(modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 10.dp, vertical = 20.dp)
+        .padding(horizontal = 10.dp, vertical = 15.dp)
     ){
 
         Row(
             modifier = Modifier
-                .height(25.dp)
+                .height(30.dp)
                 .clickable { onClick() },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
-            Icon(
+            Icon(modifier = Modifier.height(15.dp),
                 painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24),
                 contentDescription = "Ícone de voltar página",
                 tint = colorResource(id = R.color.blue_button)
@@ -51,7 +48,7 @@ fun Header(title: String, onClick: () -> Unit) {
             )
         }
 
-        Row(modifier = Modifier.height(25.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.height(30.dp), verticalAlignment = Alignment.CenterVertically) {
             Title(size = 16.sp, title = title, textAlign = TextAlign.Center)
         }
 

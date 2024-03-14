@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,6 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -42,7 +45,7 @@ import br.com.thuler.vagalivre.components.AppLogo
 import br.com.thuler.vagalivre.components.AppText
 import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.RectangularButton
-import br.com.thuler.vagalivre.components.SmallIconButton
+import br.com.thuler.vagalivre.components.SmallIcon
 import br.com.thuler.vagalivre.components.UserPhoto
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -83,10 +86,10 @@ fun HomeScreen(navController: NavController) {
                 .fillMaxWidth()
                 .padding(10.dp)
             ) {
-                SmallIconButton(
-                    type = "menu",
-                    onClickAction = { dockIsVisible = true; menuIsVisible = false }
-                    )
+                Row(modifier = Modifier.clickable { dockIsVisible = true; menuIsVisible = false }) {
+                    SmallIcon(type = "menu")
+                }
+
                 }
         }
 
@@ -107,16 +110,24 @@ fun HomeScreen(navController: NavController) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.BottomCenter)
-            .background(Color(0xCCFFFFFF))
-
+            .background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFFF5F5F5).copy(alpha = 0.9f),
+                        Color.White.copy(alpha = 1f),
+                        Color(0xFFF5F5F5).copy(alpha = 0.8f),
+                    )
+                )
+            )
         ) {
             FormInput(
                 modifier = Modifier
-                    .padding(horizontal = 15.dp).padding(bottom = 15.dp, top = 7.dp),
+                    .padding(horizontal = 15.dp)
+                    .padding(bottom = 15.dp, top = 7.dp),
                 value = search,
                 onValueChange = { search = it},
                 label = "Procurar",
-                icon = R.drawable.outline_email_24,
+                icon = R.drawable.search_24px,
                 trailing = {
                     Icon(
                         painter = painterResource(id = R.drawable.my_location_24px),
@@ -133,137 +144,150 @@ fun HomeScreen(navController: NavController) {
     // Painel lateral
     AnimatedVisibility(visible = dockIsVisible) {
 
-            Column(
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .padding(end = 200.dp)
+                .padding(vertical = 10.dp)
+                .clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFFD8D8D8).copy(alpha = 0.95f),
+                            Color(0xFFF0F0F0).copy(alpha = 1f),
+                            Color.White.copy(alpha = 1f),
+                            Color(0xFFF0F0F0).copy(alpha = 1f),
+                            Color(0xFFD8D8D8).copy(alpha = 0.95f),
+                        )
+                    )
+                ),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+
+
+            // Header
+            Row(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
-                    .padding(end = 200.dp)
-                    .background(Color(0xE6F0F0F0)),
-                verticalArrangement = Arrangement.SpaceBetween
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
-
-                // Header
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    SmallIconButton(
-                        type = "settings",
-                        onClickAction = { navController.navigate("settings") })
-                    SmallIconButton(
-                        type = "close",
-                        onClickAction = { dockIsVisible = false; menuIsVisible = true })
+                Row(modifier = Modifier.clickable { navController.navigate("settings") }) {
+                    SmallIcon(type = "settings")
                 }
 
-
-                // Main
-                Column {
-
-                    // TÍTULO
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(55.dp)
-                            .padding(horizontal = 15.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        AppLogo(size = 26.sp)
-                        Spacer(
-                            modifier = Modifier
-                                .height(1.dp)
-                                .border(
-                                    BorderStroke(2.dp, Color.Black),
-                                    shape = RectangleShape
-                                )
-                                .fillMaxWidth()
-                        )
-                    }
-
-                    // FOTO
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(284.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        UserPhoto(
-                            photo = R.drawable.foto,
-                            size = 100.dp
-                        )
-
-                        AppText(
-                            modifier = Modifier.padding(top = 10.dp, bottom = 15.dp),
-                            text = "João dos Santos Silva",
-                            size = 14.sp,
-                            color = R.color.black,
-                            weight = FontWeight.Bold
-                        )
-
-                        RectangularButton(
-                            modifier = Modifier
-                                .width(80.dp)
-                                .height(25.dp),
-                            text = "Editar",
-                            onClick = { navController.navigate("profile") },
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold,
-                            border = null
-                        )
-
-                    }
-
-
-                    // VERSÃO
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(25.dp)
-                            .padding(horizontal = 15.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Spacer(
-                            modifier = Modifier
-                                .height(1.dp)
-                                .border(
-                                    BorderStroke(2.dp, Color.Black),
-                                    shape = RectangleShape
-                                )
-                                .fillMaxWidth()
-                        )
-
-                        AppText(
-                            text = "VERSÃO 1.0.0",
-                            size = 8.sp,
-                            color = R.color.black,
-                            weight = FontWeight.Bold
-                        )
-                    }
-
+                Row(modifier = Modifier.clickable { dockIsVisible = false; menuIsVisible = true }) {
+                    SmallIcon(type = "close")
                 }
+            }
 
 
-                // Footer
-                Row(
+            // Main
+            Column {
+
+                // TÍTULO
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { navController.navigate("login") },
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                        .height(55.dp)
+                        .padding(horizontal = 15.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row(modifier = Modifier.width(50.dp)) {
-                        SmallIconButton(type = "logout", onClickAction = { })
-                    }
-                    Row(modifier = Modifier.width(50.dp)) {
-                        AppText(text = "Sair", size = 14.sp, color = R.color.black, weight =FontWeight.Bold )
-                    }
+                    AppLogo(size = 26.sp)
+                    Spacer(
+                        modifier = Modifier
+                            .height(1.dp)
+                            .border(
+                                BorderStroke(2.dp, Color.Black),
+                                shape = RectangleShape
+                            )
+                            .fillMaxWidth()
+                    )
+                }
+
+                // FOTO
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(284.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    UserPhoto(
+                        photo = R.drawable.foto,
+                        size = 100.dp
+                    )
+
+                    AppText(
+                        modifier = Modifier.padding(top = 10.dp, bottom = 15.dp),
+                        text = "João dos Santos Silva",
+                        size = 14.sp,
+                        color = R.color.black,
+                        weight = FontWeight.Bold
+                    )
+
+                    RectangularButton(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(30.dp),
+                        text = "Editar",
+                        onClick = { navController.navigate("profile") },
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        border = null
+                    )
+
+                }
+
+
+                // VERSÃO
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(horizontal = 15.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .height(1.dp)
+                            .border(
+                                BorderStroke(2.dp, Color.Black),
+                                shape = RectangleShape
+                            )
+                            .fillMaxWidth()
+                    )
+
+                    AppText(
+                        text = "VERSÃO 1.0.0",
+                        size = 8.sp,
+                        color = R.color.black,
+                        weight = FontWeight.Bold
+                    )
                 }
 
             }
+
+
+            // Footer
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { navController.navigate("login") },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(modifier = Modifier.width(50.dp)) {
+                    SmallIcon(type = "logout")
+                }
+                Row(modifier = Modifier.width(50.dp)) {
+                    AppText(text = "Sair", size = 14.sp, color = R.color.black, weight =FontWeight.Bold )
+                }
+            }
+
+        }
 
     }
 

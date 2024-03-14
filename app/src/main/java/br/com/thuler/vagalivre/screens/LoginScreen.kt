@@ -115,7 +115,7 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
                 
                 RectangularButton(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(45.dp),
                     text = "Acessar",
                     onClick = { navController.navigate("home") },
                     fontSize = 18.sp,
