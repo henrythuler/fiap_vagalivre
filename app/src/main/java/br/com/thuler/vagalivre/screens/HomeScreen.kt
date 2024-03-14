@@ -27,10 +27,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -46,25 +44,39 @@ import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.RectangularButton
 import br.com.thuler.vagalivre.components.SmallIconButton
 import br.com.thuler.vagalivre.components.UserPhoto
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.rememberCameraPositionState
 
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    var dockIsVisible by remember { mutableStateOf(true) }
+    var dockIsVisible by remember { mutableStateOf(false) }
     var menuIsVisible by remember { mutableStateOf(true) }
     var search by remember { mutableStateOf("") }
 
+    val bauru = LatLng(-22.316705, -49.070066)
+//    val suzano = LatLng(-23.537611, -46.309262)
+//    val saoJoseDosCampos = LatLng(-23.219840, -45.891566)
+
+    val cameraPositionState = rememberCameraPositionState { position = CameraPosition.fromLatLngZoom(bauru, 15f) }
 
     // Mapa
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .paint(
-            painter = painterResource(id = R.drawable.map),
-            contentScale = ContentScale.FillBounds
-        )
-    )
+    Box(modifier = Modifier.fillMaxSize())
     {
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            cameraPositionState = cameraPositionState
+        ) {
+//            Marker(
+//                state = MarkerState(position = bauru),
+//                title = "Bauru",
+//                snippet = "Marker in Bauru"
+//            )
+        }
+
         // Menu
         AnimatedVisibility(visible = menuIsVisible) {
             Row(modifier = Modifier
@@ -83,7 +95,9 @@ fun HomeScreen(navController: NavController) {
             .fillMaxWidth()
             .align(Alignment.Center), horizontalArrangement = Arrangement.End) {
             Button(modifier = Modifier.size(width = 70.dp, height = 70.dp),
-                onClick = { navController.navigate("parking") }
+                onClick = {
+                    navController.navigate("parking")
+                }
             ) {
                 Text(text = "R$5", fontSize = 12.sp, maxLines = 1)
             }
@@ -93,12 +107,12 @@ fun HomeScreen(navController: NavController) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.BottomCenter)
-            .background(Color(0xBBFFFFFF))
+            .background(Color(0xCCFFFFFF))
 
         ) {
             FormInput(
                 modifier = Modifier
-                    .padding(horizontal = 15.dp, vertical = 7.dp),
+                    .padding(horizontal = 15.dp).padding(bottom = 15.dp, top = 7.dp),
                 value = search,
                 onValueChange = { search = it},
                 label = "Procurar",
