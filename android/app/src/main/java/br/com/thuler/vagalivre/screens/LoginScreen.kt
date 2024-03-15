@@ -40,6 +40,9 @@ import br.com.thuler.vagalivre.models.LoginViewModel
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
 
+    // ENDPOINT: https://vagalivre-app.azurewebsites.net/v1/users/login
+    // DOCUMENTAÇÃO: https://vagalivre-app.azurewebsites.net/swagger/index.html
+
     val email by viewModel.email.observeAsState("")
     val password by viewModel.password.observeAsState("")
 
