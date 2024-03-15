@@ -73,7 +73,7 @@ fun ParkDetails(
         )
 
         AppText(
-            text = "R$ $price por hora",
+            text = "R$%.2f por hora".format(price),
             size = 16.sp,
             color = R.color.black,
             weight = FontWeight.Normal
