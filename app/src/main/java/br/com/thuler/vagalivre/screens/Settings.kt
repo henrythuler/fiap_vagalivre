@@ -17,8 +17,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonColors
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +39,9 @@ import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.ConfigLabel
 import br.com.thuler.vagalivre.components.Header
 import br.com.thuler.vagalivre.components.Title
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
 
 
 @Composable
@@ -48,9 +56,9 @@ fun SettingsScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(40.dp))
 
         Column(modifier = Modifier
-                .height(55.dp)
-                .fillMaxWidth()
-                .padding(0.dp)
+            .height(55.dp)
+            .fillMaxWidth()
+            .padding(0.dp)
         )
         {
             ConfigLabel(icon = R.drawable.baseline_translate_24,
@@ -62,43 +70,11 @@ fun SettingsScreen(navController: NavController) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally)
         {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start)
-                .offset(x = 40.dp, y = 0.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically)
-            {
-                RadioButton(selected = false, onClick = { /*TODO*/ })
-                Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
-                    text = "Português")
-            }
-            Spacer(modifier = Modifier
-                    .height(1.dp)
-                    .border(
-                        BorderStroke(2.dp, Color(0x68727070)),
-                        shape = RectangleShape)
-                    .width(300.dp)
-                    .padding(start = 5.dp, end = 5.dp))
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start)
-                .offset(x = 40.dp, y = 0.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically)
-            {
-                RadioButton(selected = false, onClick = { /*TODO*/ })
-                Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
-                    text = "Inglês")
 
+            var idiomaSelecionado by remember {
+                mutableStateOf(0)
             }
-            Spacer(modifier = Modifier
-                    .height(1.dp)
-                    .border(
-                        BorderStroke(2.dp, Color(0x68727070)),
-                        shape = RectangleShape)
-                    .width(300.dp)
-                    .padding(start = 5.dp, end = 5.dp))
+
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Start)
@@ -106,15 +82,62 @@ fun SettingsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically)
             {
-                RadioButton(selected = false, onClick = { /*TODO*/ })
+                RadioButton(selected = idiomaSelecionado == 0,
+                    onClick = { idiomaSelecionado = 0 },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue))
                 Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
-                    text = "Espanhol")
-            }
+                    text = "Português") }
+
+            Spacer(modifier = Modifier
+                .height(1.dp)
+                .border(BorderStroke(2.dp,
+                    Color(0x68727070)),
+                    shape = RectangleShape)
+                .width(300.dp)
+                .padding(start = 5.dp, end = 5.dp))
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
+                .offset(x = 40.dp, y = 0.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically)
+            {
+                RadioButton(selected = idiomaSelecionado == 1,
+                    onClick = { idiomaSelecionado = 1 },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue))
+                Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
+                    text = "Inglês") }
+
+            Spacer(modifier = Modifier
+                .height(1.dp)
+                .border(BorderStroke(2.dp,
+                    Color(0x68727070)),
+                    shape = RectangleShape)
+                .width(300.dp)
+                .padding(start = 5.dp, end = 5.dp))
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
+                .offset(x = 40.dp, y = 0.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically)
+            {
+                RadioButton(selected = idiomaSelecionado == 2,
+                    onClick = { idiomaSelecionado = 2 },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue))
+                Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
+                    text = "Espanhol") }
+
             Spacer(
                 modifier = Modifier
                     .height(1.dp)
-                    .border(
-                        BorderStroke(2.dp, Color(0x68727070)),
+                    .border(BorderStroke(2.dp,
+                        Color(0x68727070)),
                         shape = RectangleShape)
                     .width(300.dp)
                     .padding(start = 5.dp, end = 5.dp))
@@ -124,13 +147,18 @@ fun SettingsScreen(navController: NavController) {
 
         Column {
             ConfigLabel(icon = R.drawable.tune,
-                title = "Tema")
-        }
+                title = "Tema") }
+
         Spacer(modifier = Modifier.height(32.dp))
 
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally)
         {
+
+            var temaSelecionado by remember {
+                mutableStateOf(0)
+            }
+
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Start)
@@ -138,17 +166,21 @@ fun SettingsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically)
             {
-                RadioButton(selected = false, onClick = { /*TODO*/ })
+                RadioButton(selected = temaSelecionado == 0,
+                    onClick = { temaSelecionado = 0 },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue))
                 Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
-                    text = "Padrão do Sistema")
-            }
+                    text = "Padrão do Sistema") }
+
             Spacer(modifier = Modifier
-                    .height(1.dp)
-                    .border(
-                        BorderStroke(2.dp, Color(0x68727070)),
-                        shape = RectangleShape)
-                    .width(300.dp)
-                    .padding(start = 5.dp, end = 5.dp))
+                .height(1.dp)
+                .border(BorderStroke(2.dp,
+                    Color(0x68727070)),
+                    shape = RectangleShape)
+                .width(300.dp)
+                .padding(start = 5.dp, end = 5.dp))
+
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Start)
@@ -156,17 +188,21 @@ fun SettingsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically)
             {
-                RadioButton(selected = false, onClick = { /*TODO*/ })
+                RadioButton(selected = temaSelecionado == 1,
+                    onClick = { temaSelecionado = 1 },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue))
                 Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
-                    text = "Claro")
-            }
+                    text = "Claro") }
+
             Spacer(modifier = Modifier
-                    .height(1.dp)
-                    .border(
-                        BorderStroke(2.dp, Color(0x68727070)),
-                        shape = RectangleShape)
-                    .width(300.dp)
-                    .padding(start = 5.dp, end = 5.dp))
+                .height(1.dp)
+                .border(BorderStroke(2.dp,
+                    Color(0x68727070)),
+                    shape = RectangleShape)
+                .width(300.dp)
+                .padding(start = 5.dp, end = 5.dp))
+
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Start)
@@ -174,17 +210,21 @@ fun SettingsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically)
             {
-                RadioButton(selected = false, onClick = { /*TODO*/ })
+                RadioButton(
+                    selected = temaSelecionado == 2,
+                    onClick = { temaSelecionado = 2 },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue))
                 Text(modifier = Modifier.offset(x = 20.dp, y = 0.dp),
-                    text = "Escuro")
-            }
+                    text = "Escuro") }
+
             Spacer(modifier = Modifier
-                    .height(1.dp)
-                    .border(
-                        BorderStroke(2.dp, Color(0x68727070)),
-                        shape = RectangleShape)
-                    .width(300.dp)
-                    .padding(start = 5.dp, end = 5.dp))
+                .height(1.dp)
+                .border(BorderStroke(2.dp,
+                    Color(0x68727070)),
+                    shape = RectangleShape)
+                .width(300.dp)
+                .padding(start = 5.dp, end = 5.dp))
         }
     }
 }
