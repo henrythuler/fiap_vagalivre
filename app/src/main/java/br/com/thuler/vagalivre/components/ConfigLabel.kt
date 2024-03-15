@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -24,17 +26,20 @@ fun ConfigLabel(icon: Int, title: String) {
 
     Row(modifier = Modifier
         .fillMaxWidth()
-        .background(Color(0XFFF6F6F6))
+        .height(60.dp)
+        .background(Color(0x4BCECECE))
         .padding(horizontal = 20.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically){
 
-        Icon(painter = painterResource(id = icon), contentDescription = "Ícone da configuração")
+        Icon(modifier = Modifier.size(25.dp),
+            painter = painterResource(id = icon),
+            contentDescription = "Ícone da configuração")
         
         Spacer(modifier = Modifier.width(12.dp))
 
         AppText(
             text = title,
-            size = 16.sp,
+            size = 19.sp,
             color = R.color.black,
             weight = FontWeight.Bold
         )
