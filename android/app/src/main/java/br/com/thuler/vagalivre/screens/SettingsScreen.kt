@@ -1,47 +1,36 @@
 package br.com.thuler.vagalivre.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.ConfigLabel
 import br.com.thuler.vagalivre.components.Header
-import br.com.thuler.vagalivre.components.Title
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-
 
 
 @Composable
@@ -72,7 +61,7 @@ fun SettingsScreen(navController: NavController) {
         {
 
             var idiomaSelecionado by remember {
-                mutableStateOf(0)
+                mutableIntStateOf(0)
             }
 
             Row(modifier = Modifier
@@ -91,9 +80,13 @@ fun SettingsScreen(navController: NavController) {
 
             Spacer(modifier = Modifier
                 .height(1.dp)
-                .border(BorderStroke(2.dp,
-                    Color(0x68727070)),
-                    shape = RectangleShape)
+                .border(
+                    BorderStroke(
+                        2.dp,
+                        Color(0x68727070)
+                    ),
+                    shape = RectangleShape
+                )
                 .width(300.dp)
                 .padding(start = 5.dp, end = 5.dp))
 
@@ -113,9 +106,13 @@ fun SettingsScreen(navController: NavController) {
 
             Spacer(modifier = Modifier
                 .height(1.dp)
-                .border(BorderStroke(2.dp,
-                    Color(0x68727070)),
-                    shape = RectangleShape)
+                .border(
+                    BorderStroke(
+                        2.dp,
+                        Color(0x68727070)
+                    ),
+                    shape = RectangleShape
+                )
                 .width(300.dp)
                 .padding(start = 5.dp, end = 5.dp))
 
@@ -136,9 +133,13 @@ fun SettingsScreen(navController: NavController) {
             Spacer(
                 modifier = Modifier
                     .height(1.dp)
-                    .border(BorderStroke(2.dp,
-                        Color(0x68727070)),
-                        shape = RectangleShape)
+                    .border(
+                        BorderStroke(
+                            2.dp,
+                            Color(0x68727070)
+                        ),
+                        shape = RectangleShape
+                    )
                     .width(300.dp)
                     .padding(start = 5.dp, end = 5.dp))
         }
@@ -156,7 +157,7 @@ fun SettingsScreen(navController: NavController) {
         {
 
             var temaSelecionado by remember {
-                mutableStateOf(0)
+                mutableIntStateOf(0)
             }
 
             Row(modifier = Modifier
@@ -175,9 +176,13 @@ fun SettingsScreen(navController: NavController) {
 
             Spacer(modifier = Modifier
                 .height(1.dp)
-                .border(BorderStroke(2.dp,
-                    Color(0x68727070)),
-                    shape = RectangleShape)
+                .border(
+                    BorderStroke(
+                        2.dp,
+                        Color(0x68727070)
+                    ),
+                    shape = RectangleShape
+                )
                 .width(300.dp)
                 .padding(start = 5.dp, end = 5.dp))
 
@@ -197,9 +202,13 @@ fun SettingsScreen(navController: NavController) {
 
             Spacer(modifier = Modifier
                 .height(1.dp)
-                .border(BorderStroke(2.dp,
-                    Color(0x68727070)),
-                    shape = RectangleShape)
+                .border(
+                    BorderStroke(
+                        2.dp,
+                        Color(0x68727070)
+                    ),
+                    shape = RectangleShape
+                )
                 .width(300.dp)
                 .padding(start = 5.dp, end = 5.dp))
 
@@ -220,11 +229,21 @@ fun SettingsScreen(navController: NavController) {
 
             Spacer(modifier = Modifier
                 .height(1.dp)
-                .border(BorderStroke(2.dp,
-                    Color(0x68727070)),
-                    shape = RectangleShape)
+                .border(
+                    BorderStroke(
+                        2.dp,
+                        Color(0x68727070)
+                    ),
+                    shape = RectangleShape
+                )
                 .width(300.dp)
                 .padding(start = 5.dp, end = 5.dp))
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun SettingsScreenPreview() {
+    SettingsScreen(rememberNavController())
 }
