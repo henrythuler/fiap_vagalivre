@@ -1,5 +1,6 @@
 package br.com.thuler.vagalivre.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +37,12 @@ import br.com.thuler.vagalivre.components.AppText
 import br.com.thuler.vagalivre.components.FormInput
 import br.com.thuler.vagalivre.components.RectangularButton
 import br.com.thuler.vagalivre.models.LoginViewModel
+import br.com.thuler.vagalivre.models.User
+import br.com.thuler.vagalivre.models.UserLogin
+import br.com.thuler.vagalivre.services.RetrofitFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
@@ -120,7 +127,25 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 RectangularButton(
                     modifier = Modifier.fillMaxWidth().height(45.dp),
                     text = "Acessar",
-                    onClick = { navController.navigate("home") },
+                    onClick = {
+
+                        val call = RetrofitFactory().getUserService().login(UserLogin(email, password))
+                        call.enqueue(object: Callback<User>{
+
+                            override fun onResponse(call: Call<User>, response: Response<User>) {
+                                if(response.isSuccessful){
+                                    val user = response.body()
+                                    navController.navigate("home")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<User>, t: Throwable) {
+                                Log.i("API", "Deu tudo errado!")
+                            }
+
+                        })
+
+                    },
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
                     border = BorderStroke(1.dp, Color.Black)
