@@ -2,6 +2,8 @@
 
 ## ANDROID FILES
 
+.idea/
+.gradle/
 android/.idea/
 android/app/build
 android/local.properties
