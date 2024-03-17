@@ -22,7 +22,10 @@ public class UserController : ControllerBase
         if (user is null || user.Password != model.Password)
             return BadRequest("User not found or incorrect password");
 
-        return Ok(user.Name);
+        return Ok(new
+        {
+            name = user.Name
+        });
     }
     
 }
