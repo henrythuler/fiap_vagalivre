@@ -1,6 +1,8 @@
 package br.com.thuler.vagalivre.screens._home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,7 +37,7 @@ import br.com.thuler.vagalivre.components.UserPhoto
 
 @Composable
 fun SidePanel(dockIsVisible: Boolean, navController: NavController, username: String, email: String, onClose: () -> Unit) {
-    AnimatedVisibility(visible = dockIsVisible) {
+    AnimatedVisibility(visible = dockIsVisible, enter = slideInHorizontally(), exit = slideOutHorizontally()) {
 
         Column(
             modifier = Modifier

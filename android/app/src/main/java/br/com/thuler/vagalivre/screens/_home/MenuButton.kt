@@ -1,6 +1,8 @@
 package br.com.thuler.vagalivre.screens._home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +14,7 @@ import br.com.thuler.vagalivre.components.SmallIcon
 
 @Composable
 fun MenuButton(menuIsVisible: Boolean, onClick: () -> Unit ) {
-    AnimatedVisibility(visible = menuIsVisible) {
+    AnimatedVisibility(visible = menuIsVisible, enter = slideInHorizontally(), exit = slideOutHorizontally()) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
