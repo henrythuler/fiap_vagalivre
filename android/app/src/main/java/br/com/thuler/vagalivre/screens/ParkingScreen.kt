@@ -8,15 +8,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.Header
 import br.com.thuler.vagalivre.components.ImageGallery
@@ -25,9 +25,21 @@ import br.com.thuler.vagalivre.components.ParkInfo
 import br.com.thuler.vagalivre.components.ParkInfoOpen
 import br.com.thuler.vagalivre.components.ParkRating
 import br.com.thuler.vagalivre.components.Title
+import br.com.thuler.vagalivre.models.SharedViewModel
+
 
 @Composable
-fun ParkingScreen(navController: NavController, username: String, email: String) {
+fun ParkingScreen(navController: NavController, username: String, email: String, sharedViewModel: SharedViewModel) {
+
+    val poi by sharedViewModel.selectedPOI.observeAsState()
+
+    val title = poi?.name ?: "Título Padrão"
+    // val placeId = poi?.placeId ?: ""
+    // TOD0: BUSCAR DADOS DO LOCAL PELO placeId
+    // Instanciar um objeto que contenha todas as informações
+    // Ex: val isOpenNow = objeto.isOpen
+
+
 
     Column(modifier = Modifier.fillMaxSize()) {
         
@@ -39,7 +51,7 @@ fun ParkingScreen(navController: NavController, username: String, email: String)
             .fillMaxWidth()
             .padding(horizontal = 20.dp)) {
 
-            Title(size = 24.sp, title = "Park Info", textAlign = TextAlign.Start)
+            Title(size = 24.sp, title = title, textAlign = TextAlign.Start)
             
             Spacer(modifier = Modifier.height(8.dp))
             
@@ -106,9 +118,10 @@ fun ParkingScreen(navController: NavController, username: String, email: String)
 }
 
 
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-private fun ParkingScreenPreview() {
-    ParkingScreen(rememberNavController(), "username", "teste@email.com")
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//private fun ParkingScreenPreview() {
+//    VagaLivreTheme {
+//    ParkingScreen(navController =  rememberNavController(), "username")
+//    }
+//}

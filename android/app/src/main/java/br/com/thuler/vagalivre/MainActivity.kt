@@ -3,6 +3,7 @@ package br.com.thuler.vagalivre
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import br.com.thuler.vagalivre.models.LoginViewModel
 import br.com.thuler.vagalivre.models.ProfileViewModel
+import br.com.thuler.vagalivre.models.SharedViewModel
 import br.com.thuler.vagalivre.screens.HomeScreen
 import br.com.thuler.vagalivre.screens.LoginScreen
 import br.com.thuler.vagalivre.screens.ParkingScreen
@@ -32,6 +34,8 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     val navController = rememberNavController()
+                    val sharedViewModel: SharedViewModel by viewModels()
+
                     NavHost(
                         navController = navController,
                         startDestination = "login"
@@ -46,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             val username = it.arguments?.getString("username")
                             val email = it.arguments?.getString("email")
-                            HomeScreen(navController, username!!, email!!)
+                            HomeScreen(navController, username!!, email!!, sharedViewModel)
                         }
                         composable(
                             route = "profile/{username}/{email}",
@@ -79,8 +83,9 @@ class MainActivity : ComponentActivity() {
                         ) {
                             val username = it.arguments?.getString("username")
                             val email = it.arguments?.getString("email")
-                            ParkingScreen(navController, username!!, email!!)
+                            ParkingScreen(navController, username!!, email!!, sharedViewModel)
                         }
+
                     }
                 }
             }

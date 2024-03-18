@@ -13,21 +13,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import br.com.thuler.vagalivre.R
+import br.com.thuler.vagalivre.models.SharedViewModel
 import br.com.thuler.vagalivre.screens._home.MenuButton
-import br.com.thuler.vagalivre.screens._home.ParkingLink
 import br.com.thuler.vagalivre.screens._home.SearchBar
 import br.com.thuler.vagalivre.screens._home.SidePanel
 import br.com.thuler.vagalivre.services.CheckPermission
 import br.com.thuler.vagalivre.services.getCurrentLocation
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 
 
 @Composable
-fun HomeScreen(navController: NavController, username: String, email: String) {
+fun HomeScreen(navController: NavController, username: String, email: String, sharedViewModel: SharedViewModel) {
 
     val context = LocalContext.current
     var defaultCamera by remember { mutableStateOf(CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(-14.234994, -51.925276), 2f))) }
@@ -45,22 +48,31 @@ fun HomeScreen(navController: NavController, username: String, email: String) {
     var menuIsVisible by remember { mutableStateOf(true) }
     var search by remember { mutableStateOf("") }
 
-    val mapProperties by remember { mutableStateOf(MapProperties()) }
+    val mapProperties by remember { mutableStateOf(
+        MapProperties(
+            mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.style_json)
+    )) }
 
     val isMapLoaded = remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize())
     {
+
         GoogleMap(
             onMapLoaded = { isMapLoaded.value = true},
+            uiSettings = MapUiSettings(zoomControlsEnabled = false),
             modifier = Modifier.matchParentSize(),
             cameraPositionState = defaultCamera,
             properties = mapProperties,
-            onMapClick = { }
+            onMapClick = {},
+            onPOIClick = {
+                sharedViewModel.selectPOI(it)
+                navController.navigate("parking/$username/$email")
+            }
         ) { }
 
+
         MenuButton(menuIsVisible = menuIsVisible) { dockIsVisible = true; menuIsVisible = false }
-        ParkingLink(modifier = Modifier.align(Alignment.Center), navController = navController, username, email)
 
         SearchBar(
             modifier = Modifier.align(Alignment.BottomCenter),

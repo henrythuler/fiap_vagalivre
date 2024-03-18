@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     implementation(libs.android.maps.utils)
+    implementation(libs.places)
 
     //Retrofit
     implementation(libs.retrofit)
