@@ -14,6 +14,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +30,8 @@ fun FormInput(
     label: String,
     icon: Int,
     trailing: @Composable (() -> Unit)? = null,
-    keyboardType: KeyboardType
+    keyboardType: KeyboardType,
+    passwordVisible: Boolean? = true
 ) {
     
     OutlinedTextField(
@@ -63,6 +66,7 @@ fun FormInput(
             )
         },
         trailingIcon = trailing,
+        visualTransformation = if (passwordVisible == true) VisualTransformation.None else PasswordVisualTransformation(),
         shape = RoundedCornerShape(12.dp)
     )
     

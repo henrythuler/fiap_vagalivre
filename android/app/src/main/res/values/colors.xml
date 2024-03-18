@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="error_red">#FFFF0033</color>
     <color name="blue_button">#FF027BFF</color>
     <color name="input_gray">#FF868686</color>
     <color name="text_gray">#FF6B5E5E</color>

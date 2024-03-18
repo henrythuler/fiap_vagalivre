@@ -27,7 +27,7 @@ import com.google.maps.android.compose.MapProperties
 
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, username: String) {
 
     val context = LocalContext.current
     var defaultCamera by remember { mutableStateOf(CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(-14.234994, -51.925276), 2f))) }
@@ -60,7 +60,7 @@ fun HomeScreen(navController: NavController) {
         ) { }
 
         MenuButton(menuIsVisible = menuIsVisible) { dockIsVisible = true; menuIsVisible = false }
-        ParkingLink(modifier = Modifier.align(Alignment.Center), navController = navController)
+        ParkingLink(modifier = Modifier.align(Alignment.Center), navController = navController, username)
 
         SearchBar(
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -69,7 +69,7 @@ fun HomeScreen(navController: NavController) {
             myLocation = { checkPermissions = true }
         )
 
-        SidePanel(dockIsVisible, navController) { dockIsVisible = false; menuIsVisible = true }
+        SidePanel(dockIsVisible, navController, username) { dockIsVisible = false; menuIsVisible = true }
     }
 
     if (!isMapLoaded.value) {

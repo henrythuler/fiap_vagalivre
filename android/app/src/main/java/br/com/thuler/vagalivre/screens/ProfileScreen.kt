@@ -35,14 +35,14 @@ import br.com.thuler.vagalivre.components.UserPhoto
 import br.com.thuler.vagalivre.models.ProfileViewModel
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
+fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController, username: String) {
 
-    val nome by viewModel.nome.observeAsState("")
+    val name by viewModel.nome.observeAsState(username)
 
     Column(modifier = Modifier.fillMaxSize()) {
 
         Header(title = "Dados Pessoais", onClick = {
-            navController.navigate("home")
+            navController.navigate("home/$username")
         })
 
         Column(modifier = Modifier
@@ -89,7 +89,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
                     .padding(horizontal = 30.dp)
                     .padding(top = 35.dp)) {
                     FormInput(
-                        value =  nome,
+                        value = name,
                         onValueChange = {viewModel.onNomeChange(it)},
                         label = "Nome",
                         icon = R.drawable.baseline_account_circle_24,
@@ -110,7 +110,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
                 icon = Icons.Outlined.Check,
                 color = Color.White,
                 onClick = {
-                    navController.navigate("home")
+                    navController.navigate("home/$name")
                 }
             )
             }
@@ -121,5 +121,5 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen(viewModel = ProfileViewModel(), navController =  rememberNavController())
+    ProfileScreen(viewModel = ProfileViewModel(), navController =  rememberNavController(), username = "username")
 }

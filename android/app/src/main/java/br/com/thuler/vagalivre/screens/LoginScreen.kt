@@ -3,6 +3,7 @@ package br.com.thuler.vagalivre.screens
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,8 +15,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -52,6 +56,8 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
 
     val email by viewModel.email.observeAsState("")
     val password by viewModel.password.observeAsState("")
+    val loginError by viewModel.loginError.observeAsState(false)
+    val passwordVisible by viewModel.passwordVisible.observeAsState(false)
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -65,6 +71,30 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
 
             //Form Column
             Column(modifier = Modifier.fillMaxWidth()) {
+
+                if(loginError) {
+
+                    if(email.isEmpty() || password.isEmpty()){
+                        AppText(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = "Email e senha são obrigatórios!",
+                            size = 16.sp,
+                            color = R.color.error_red,
+                            weight = FontWeight.Normal
+                        )
+                    }else{
+                        AppText(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = "Email ou senha inválido!",
+                            size = 16.sp,
+                            color = R.color.error_red,
+                            weight = FontWeight.Normal
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                    
+                }
 
                 FormInput(
                     value = email,
@@ -81,7 +111,17 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                     onValueChange = {viewModel.onPasswordChange(it)},
                     label = "Senha",
                     icon = R.drawable.outline_lock_24,
-                    keyboardType = KeyboardType.Password
+                    keyboardType = KeyboardType.Password,
+                    passwordVisible = passwordVisible,
+                    trailing = {
+                        IconButton(onClick = { viewModel.onPasswordVisibleChange(!passwordVisible) }) {
+                            if(passwordVisible){
+                                Icon(painter = painterResource(id = R.drawable.baseline_visibility_24), contentDescription = "Senha visível")
+                            }else{
+                                Icon(painter = painterResource(id = R.drawable.baseline_visibility_off_24), contentDescription = "Senha invisível")
+                            }
+                        }
+                    }
                 )
                 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -125,7 +165,9 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
                 
                 RectangularButton(
-                    modifier = Modifier.fillMaxWidth().height(45.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp),
                     text = "Acessar",
                     onClick = {
 
@@ -134,8 +176,10 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
 
                             override fun onResponse(call: Call<User>, response: Response<User>) {
                                 if(response.isSuccessful){
-                                    val user = response.body()
-                                    navController.navigate("home")
+                                    val user: User = response.body()!!
+                                    navController.navigate("home/${user.name}")
+                                }else{
+                                    viewModel.onLoginErrorChange(true)
                                 }
                             }
 
@@ -206,6 +250,7 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 AppText(
+                    modifier = Modifier.clickable { navController.navigate("home/Convidado") },
                     text = "Acessar sem uma conta",
                     size = 16.sp,
                     color = R.color.text_blue,

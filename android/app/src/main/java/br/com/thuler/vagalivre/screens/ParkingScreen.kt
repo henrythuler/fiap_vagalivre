@@ -27,12 +27,12 @@ import br.com.thuler.vagalivre.components.ParkRating
 import br.com.thuler.vagalivre.components.Title
 
 @Composable
-fun ParkingScreen(navController: NavController) {
+fun ParkingScreen(navController: NavController, username: String) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         
         Header(title = "Estacionamento", onClick = {
-            navController.navigate("home")
+            navController.navigate("home/$username")
         })
 
         Column(modifier = Modifier
@@ -110,5 +110,5 @@ fun ParkingScreen(navController: NavController) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun ParkingScreenPreview() {
-    ParkingScreen(rememberNavController())
+    ParkingScreen(rememberNavController(), "username")
 }

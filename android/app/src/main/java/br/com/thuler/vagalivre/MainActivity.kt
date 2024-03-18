@@ -35,10 +35,22 @@ class MainActivity : ComponentActivity() {
                         startDestination = "login"
                     ){
                         composable(route = "login"){ LoginScreen(viewModel = LoginViewModel(), navController = navController) }
-                        composable(route = "home") { HomeScreen(navController) }
-                        composable(route = "profile") { ProfileScreen(viewModel = ProfileViewModel(), navController = navController) }
-                        composable(route = "settings") { SettingsScreen(navController) }
-                        composable(route = "parking") { ParkingScreen(navController) }
+                        composable(route = "home/{username}") {
+                            val username = it.arguments?.getString("username")
+                            HomeScreen(navController, username!!)
+                        }
+                        composable(route = "profile/{username}") {
+                            val username = it.arguments?.getString("username")
+                            ProfileScreen(viewModel = ProfileViewModel(), navController = navController, username = username!!)
+                        }
+                        composable(route = "settings/{username}") {
+                            val username = it.arguments?.getString("username")
+                            SettingsScreen(navController, username!!)
+                        }
+                        composable(route = "parking/{username}") {
+                            val username = it.arguments?.getString("username")
+                            ParkingScreen(navController, username!!)
+                        }
                     }
                 }
             }
