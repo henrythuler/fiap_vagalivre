@@ -13,16 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.models.SharedViewModel
 import br.com.thuler.vagalivre.screens._home.MenuButton
 import br.com.thuler.vagalivre.screens._home.SearchBar
 import br.com.thuler.vagalivre.screens._home.SidePanel
 import br.com.thuler.vagalivre.services.CheckPermission
 import br.com.thuler.vagalivre.services.getCurrentLocation
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -33,13 +32,23 @@ import com.google.maps.android.compose.MapUiSettings
 fun HomeScreen(navController: NavController, username: String, email: String, sharedViewModel: SharedViewModel) {
 
     val context = LocalContext.current
-    var defaultCamera by remember { mutableStateOf(CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(-14.234994, -51.925276), 2f))) }
+    val brazil = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(-14.234994, -51.925276), 2f))
+
+    if (!sharedViewModel.positionState.isInitialized)
+        sharedViewModel.setCameraPositionState(brazil)
+
+    var defaultCamera by remember { mutableStateOf(sharedViewModel.positionState.value!!)}
 
     var checkPermissions by remember { mutableStateOf(false) }
     if (checkPermissions) {
-        CheckPermission {hasPermission ->
+        CheckPermission { hasPermission ->
             if (hasPermission)
-                getCurrentLocation(context) { location -> defaultCamera = CameraPositionState(CameraPosition.fromLatLngZoom(location, 15f)) }
+                getCurrentLocation(context) { location ->
+                    sharedViewModel.setCameraPositionState(CameraPositionState(CameraPosition.fromLatLngZoom(location, 17f)))
+                    defaultCamera = sharedViewModel.positionState.value!!
+                }
+
+
             checkPermissions = false
         }
     }
@@ -48,12 +57,9 @@ fun HomeScreen(navController: NavController, username: String, email: String, sh
     var menuIsVisible by remember { mutableStateOf(true) }
     var search by remember { mutableStateOf("") }
 
-    val mapProperties by remember { mutableStateOf(
-        MapProperties(
-            mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.style_json)
-    )) }
-
+    val mapProperties by remember { mutableStateOf(MapProperties()) }
     val isMapLoaded = remember { mutableStateOf(false) }
+
 
     Box(modifier = Modifier.fillMaxSize())
     {
@@ -61,16 +67,17 @@ fun HomeScreen(navController: NavController, username: String, email: String, sh
         GoogleMap(
             onMapLoaded = { isMapLoaded.value = true},
             uiSettings = MapUiSettings(zoomControlsEnabled = false),
+            properties = mapProperties,
+            googleMapOptionsFactory = { GoogleMapOptions().mapId("bd305b5cd26de3c2") } ,
             modifier = Modifier.matchParentSize(),
             cameraPositionState = defaultCamera,
-            properties = mapProperties,
             onMapClick = {},
             onPOIClick = {
                 sharedViewModel.selectPOI(it)
                 navController.navigate("parking/$username/$email")
             }
-        ) { }
-
+        ) {
+        }
 
         MenuButton(menuIsVisible = menuIsVisible) { dockIsVisible = true; menuIsVisible = false }
 
