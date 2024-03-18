@@ -32,7 +32,12 @@ import br.com.thuler.vagalivre.models.SharedViewModel
 fun ParkingScreen(navController: NavController, username: String, email: String, sharedViewModel: SharedViewModel) {
 
     val poi by sharedViewModel.selectedPOI.observeAsState()
+
     val title = poi?.name ?: "Título Padrão"
+    // val placeId = poi?.placeId ?: ""
+    // TOD0: BUSCAR DADOS DO LOCAL PELO placeId
+    // Instanciar um objeto que contenha todas as informações
+    // Ex: val isOpenNow = objeto.isOpen
 
 
 
