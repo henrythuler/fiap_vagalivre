@@ -34,7 +34,7 @@ import br.com.thuler.vagalivre.components.SmallIcon
 import br.com.thuler.vagalivre.components.UserPhoto
 
 @Composable
-fun SidePanel(dockIsVisible: Boolean, navController: NavController, username: String, onClose: () -> Unit) {
+fun SidePanel(dockIsVisible: Boolean, navController: NavController, username: String, email: String, onClose: () -> Unit) {
     AnimatedVisibility(visible = dockIsVisible) {
 
         Column(
@@ -65,7 +65,7 @@ fun SidePanel(dockIsVisible: Boolean, navController: NavController, username: St
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(modifier = Modifier.clickable { navController.navigate("settings/$username") }) {
+                Row(modifier = Modifier.clickable { navController.navigate("settings/$username/$email") }) {
                     SmallIcon(type = "settings")
                 }
 
@@ -125,7 +125,7 @@ fun SidePanel(dockIsVisible: Boolean, navController: NavController, username: St
                             .width(100.dp)
                             .height(30.dp),
                         text = "Editar",
-                        onClick = { navController.navigate("profile/$username") },
+                        onClick = { navController.navigate("profile/$username/$email") },
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         border = null

@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun ParkingLink(modifier: Modifier, navController: NavController, username: String) {
+fun ParkingLink(modifier: Modifier, navController: NavController, username: String, email: String) {
     Row(modifier = modifier
         .fillMaxWidth(),
         horizontalArrangement = Arrangement.End) {
         Button(modifier = Modifier.size(width = 70.dp, height = 70.dp),
             onClick = {
-                navController.navigate("parking/$username")
+                navController.navigate("parking/$username/$email")
             }
         ) {
             Text(text = "R$5", fontSize = 12.sp, maxLines = 1)

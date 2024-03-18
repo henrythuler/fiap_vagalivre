@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import br.com.thuler.vagalivre.models.LoginViewModel
 import br.com.thuler.vagalivre.models.ProfileViewModel
 import br.com.thuler.vagalivre.screens.HomeScreen
@@ -35,21 +37,49 @@ class MainActivity : ComponentActivity() {
                         startDestination = "login"
                     ){
                         composable(route = "login"){ LoginScreen(viewModel = LoginViewModel(), navController = navController) }
-                        composable(route = "home/{username}") {
+                        composable(
+                            route = "home/{username}/{email}",
+                            arguments = listOf(
+                                navArgument("username") {type = NavType.StringType},
+                                navArgument("email") {type = NavType.StringType}
+                            )
+                        ) {
                             val username = it.arguments?.getString("username")
-                            HomeScreen(navController, username!!)
+                            val email = it.arguments?.getString("email")
+                            HomeScreen(navController, username!!, email!!)
                         }
-                        composable(route = "profile/{username}") {
+                        composable(
+                            route = "profile/{username}/{email}",
+                            arguments = listOf(
+                                navArgument("username") {type = NavType.StringType},
+                                navArgument("email") {type = NavType.StringType}
+                            )
+                        ) {
                             val username = it.arguments?.getString("username")
-                            ProfileScreen(viewModel = ProfileViewModel(), navController = navController, username = username!!)
+                            val email = it.arguments?.getString("email")
+                            ProfileScreen(viewModel = ProfileViewModel(), navController = navController, username = username!!, email = email!!)
                         }
-                        composable(route = "settings/{username}") {
+                        composable(
+                            route = "settings/{username}/{email}",
+                            arguments = listOf(
+                                navArgument("username") {type = NavType.StringType},
+                                navArgument("email") {type = NavType.StringType}
+                            )
+                        ) {
                             val username = it.arguments?.getString("username")
-                            SettingsScreen(navController, username!!)
+                            val email = it.arguments?.getString("email")
+                            SettingsScreen(navController, username!!, email!!)
                         }
-                        composable(route = "parking/{username}") {
+                        composable(
+                            route = "parking/{username}/{email}",
+                            arguments = listOf(
+                                navArgument("username") {type = NavType.StringType},
+                                navArgument("email") {type = NavType.StringType}
+                            )
+                        ) {
                             val username = it.arguments?.getString("username")
-                            ParkingScreen(navController, username!!)
+                            val email = it.arguments?.getString("email")
+                            ParkingScreen(navController, username!!, email!!)
                         }
                     }
                 }

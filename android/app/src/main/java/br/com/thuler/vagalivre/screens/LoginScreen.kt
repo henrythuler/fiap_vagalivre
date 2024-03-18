@@ -177,7 +177,7 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                             override fun onResponse(call: Call<User>, response: Response<User>) {
                                 if(response.isSuccessful){
                                     val user: User = response.body()!!
-                                    navController.navigate("home/${user.name}")
+                                    navController.navigate("home/${user.name}/$email")
                                 }else{
                                     viewModel.onLoginErrorChange(true)
                                 }
@@ -250,7 +250,7 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 AppText(
-                    modifier = Modifier.clickable { navController.navigate("home/Convidado") },
+                    modifier = Modifier.clickable { navController.navigate("home/Convidado/convidado@email.com") },
                     text = "Acessar sem uma conta",
                     size = 16.sp,
                     color = R.color.text_blue,

@@ -33,12 +33,12 @@ import br.com.thuler.vagalivre.components.ConfigLabel
 import br.com.thuler.vagalivre.components.Header
 
 @Composable
-fun SettingsScreen(navController: NavController, username: String) {
+fun SettingsScreen(navController: NavController, username: String, email: String) {
 
     Column(modifier = Modifier.fillMaxSize()) {
 
         Header(title = "Configurações", onClick = {
-            navController.navigate("home/$username")
+            navController.navigate("home/$username/$email")
         })
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -244,5 +244,5 @@ fun SettingsScreen(navController: NavController, username: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun SettingsScreenPreview() {
-    SettingsScreen(rememberNavController(), "username")
+    SettingsScreen(rememberNavController(), "username", "teste@email.com")
 }

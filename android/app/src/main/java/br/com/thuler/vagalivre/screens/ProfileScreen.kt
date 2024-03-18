@@ -35,14 +35,14 @@ import br.com.thuler.vagalivre.components.UserPhoto
 import br.com.thuler.vagalivre.models.ProfileViewModel
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController, username: String) {
+fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController, username: String, email: String) {
 
     val name by viewModel.nome.observeAsState(username)
 
     Column(modifier = Modifier.fillMaxSize()) {
 
         Header(title = "Dados Pessoais", onClick = {
-            navController.navigate("home/$username")
+            navController.navigate("home/$username/$email")
         })
 
         Column(modifier = Modifier
@@ -79,7 +79,12 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController, use
                         .padding(top = 10.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        AppText(text = "joao@email.com", size = 16.sp, color = R.color.black, weight = FontWeight.Normal)
+                        AppText(
+                            text = email,
+                            size = 16.sp,
+                            color = R.color.black,
+                            weight = FontWeight.Normal
+                        )
                     }
                 }
 
@@ -110,7 +115,7 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController, use
                 icon = Icons.Outlined.Check,
                 color = Color.White,
                 onClick = {
-                    navController.navigate("home/$name")
+                    navController.navigate("home/$name/$email")
                 }
             )
             }
@@ -121,5 +126,5 @@ fun ProfileScreen(viewModel: ProfileViewModel, navController: NavController, use
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfileScreenPreview() {
-    ProfileScreen(viewModel = ProfileViewModel(), navController =  rememberNavController(), username = "username")
+    ProfileScreen(viewModel = ProfileViewModel(), navController =  rememberNavController(), username = "username", email = "teste@email.com")
 }
