@@ -30,6 +30,8 @@ import br.com.thuler.vagalivre.components.ParkInfoOpen
 import br.com.thuler.vagalivre.components.ParkRating
 import br.com.thuler.vagalivre.components.Title
 import br.com.thuler.vagalivre.models.SharedViewModel
+import br.com.thuler.vagalivre.services.convertHoursInterval
+import br.com.thuler.vagalivre.services.translateWeekdayText
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPhotoRequest
@@ -54,41 +56,44 @@ fun ParkingScreen(
     val title = poi?.name ?: "Título Padrão"
     val place = sharedViewModel.place.value
 
-    Places.initializeWithNewPlacesApiEnabled(context, BuildConfig.MAPS_API_KEY)
+    val openDayTime: MutableList<Pair<String, String>> = mutableListOf()
 
-    // Specify fields. Requests for photos must always have the PHOTO_METADATAS field.
-    val fields = listOf(Place.Field.PHOTO_METADATAS)
+    //Getting Place Photos
 
-    // Get a Place object (this example uses fetchPlace(), but you can also use findCurrentPlace())
-    val placeRequest = FetchPlaceRequest.newInstance(poi?.placeId!!, fields)
-
-
-    val placesClient: PlacesClient = Places.createClient(context)
-
-    placesClient.fetchPlace(placeRequest)
-        .addOnSuccessListener { response: FetchPlaceResponse ->
-            val place = response.place
-
-            // Get the photo metadata.
-            val metadata = place.photoMetadatas
-            val photoMetadata = metadata
-
-            // Create a FetchPhotoRequest.
-            for(image in photoMetadata!!){
-                val photoRequest = FetchPhotoRequest.builder(image)
-                    .setMaxWidth(150)
-                    .setMaxHeight(150)
-                    .build()
-                placesClient.fetchPhoto(photoRequest)
-                    .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
-                        val bitmap = fetchPhotoResponse.bitmap
-                        image
-                    }.addOnFailureListener { exception: Exception ->
-
-                    }
-            }
-
-        }
+//    Places.initializeWithNewPlacesApiEnabled(context, BuildConfig.MAPS_API_KEY)
+//
+//    // Specify fields. Requests for photos must always have the PHOTO_METADATAS field.
+//    val fields = listOf(Place.Field.PHOTO_METADATAS)
+//
+//    // Get a Place object (this example uses fetchPlace(), but you can also use findCurrentPlace())
+//    val placeRequest = FetchPlaceRequest.newInstance(poi?.placeId!!, fields)
+//
+//
+//    val placesClient: PlacesClient = Places.createClient(context)
+//
+//    placesClient.fetchPlace(placeRequest)
+//        .addOnSuccessListener { response: FetchPlaceResponse ->
+//            val place = response.place
+//
+//            // Get the photo metadata.
+//            val metadata = place.photoMetadatas
+//            val photoMetadata = metadata
+//
+//            // Create a FetchPhotoRequest.
+//            for(image in photoMetadata!!){
+//                val photoRequest = FetchPhotoRequest.builder(image)
+//                    .setMaxWidth(150)
+//                    .setMaxHeight(150)
+//                    .build()
+//                placesClient.fetchPhoto(photoRequest)
+//                    .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
+//                        val bitmap = fetchPhotoResponse.bitmap
+//                    }.addOnFailureListener { exception: Exception ->
+//
+//                    }
+//            }
+//
+//        }
 
     Column(modifier = Modifier.fillMaxSize()) {
         
@@ -112,11 +117,11 @@ fun ParkingScreen(
             
             Spacer(modifier = Modifier.height(16.dp))
 
-            ParkDetails(
-                closeAt = "18:00",
-                price = 5f,
-                parkingPlaces = 16
-            )
+//            ParkDetails(
+//                closeAt = "18:00",
+//                price = 5f,
+//                parkingPlaces = 16
+//            )
             
             Spacer(modifier = Modifier.height(24.dp))
             
@@ -148,27 +153,37 @@ fun ParkingScreen(
 
             ParkInfo(
                 icon = R.drawable.phone,
-                info = place?.phoneNumber!!
+                info = place.phoneNumber!!
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            ParkInfo(
-                icon = R.drawable.car,
-                info = "24 vagas totais"
-            )
+            if(place.openingHours != null){
+                for(d in place.openingHours!!.weekdayText){
 
-            Spacer(modifier = Modifier.height(16.dp))
+                    //Spliting the day and the hour
+                    val dayTime = d.split(": ")
+                    val day = dayTime[0]
+                    val hour = dayTime[1]
 
-            ParkInfoOpen(dayTime = listOf(
-                Pair("Segunda-feira", "08:00 às 18:00"),
-                Pair("Terça-feira", "08:00 às 18:00"),
-                Pair("Quarta-feira", "08:00 às 18:00"),
-                Pair("Quinta-feira", "08:00 às 18:00"),
-                Pair("Sexta-feira", "08:00 às 18:00"),
-                Pair("Sábado", "08:00 às 12:00"),
-                Pair("Domingo", "Não abre"))
-            )
+                    //Translating the weekday
+                    val translatedDay = translateWeekdayText(day)
+                    var convertedHour = ""
+
+                    //Verifying if i need to convert the hour or it's closed
+                    convertedHour = if(!hour.equals("closed", ignoreCase = true)){
+                        convertHoursInterval(hour)
+                    }else{
+                        "Fechado"
+                    }
+
+                    //Adding to the openDayTime list
+                    openDayTime.add(Pair(translatedDay, convertedHour))
+
+                }
+
+                ParkInfoOpen(dayTime = openDayTime)
+            }
 
         }
 

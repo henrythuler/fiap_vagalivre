@@ -51,8 +51,8 @@ fun ParkInfoOpen(dayTime: List<Pair<String, String>>) {
                         weight = FontWeight.Normal
                     )
 
-                    if(dayTime[i].second.equals("não abre", ignoreCase = true)){
-                        Box(Modifier.weight(0.88f)){
+                    if(dayTime[i].second.equals("fechado", ignoreCase = true)){
+                        Box(Modifier.weight(0.82f)){
                             AppText(
                                 text = dayTime[i].second,
                                 size = 14.sp,
