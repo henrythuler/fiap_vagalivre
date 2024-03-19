@@ -2,6 +2,7 @@ package br.com.thuler.vagalivre.screens
 
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,10 +49,7 @@ fun ParkingScreen(
     sharedViewModel: SharedViewModel
 ) {
 
-    val context = LocalContext.current
     val poi by sharedViewModel.selectedPOI.observeAsState()
-
-    val bitmaps: MutableList<Bitmap> = mutableListOf()
 
     val title = poi?.name ?: "Título Padrão"
     val place = sharedViewModel.place.value
@@ -95,15 +93,16 @@ fun ParkingScreen(
 //
 //        }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        
-        Header(title = "Estacionamento", onClick = {
-            navController.navigate("home/$username/$email")
-        })
+    Header(title = "Estacionamento", onClick = {
+        navController.navigate("home/$username/$email")
+    })
+
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
 
         Column(modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)) {
+            .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.Center) {
 
             Title(
                 size = 24.sp,
@@ -113,23 +112,11 @@ fun ParkingScreen(
             
             Spacer(modifier = Modifier.height(8.dp))
 
-            ParkRating(place?.rating!!.toFloat(), place?.userRatingsTotal!!)
-            
-            Spacer(modifier = Modifier.height(16.dp))
-
-//            ParkDetails(
-//                closeAt = "18:00",
-//                price = 5f,
-//                parkingPlaces = 16
-//            )
-            
-            Spacer(modifier = Modifier.height(24.dp))
-            
-            ImageGallery(images = listOf(bitmaps))
+            if(place?.rating != null && place?.userRatingsTotal != null){
+                ParkRating(place.rating!!.toFloat(), place.userRatingsTotal!!)
+            }
 
         }
-
-        Log.i("Hours", place?.openingHours?.weekdayText.toString())
 
         HorizontalDivider(
             modifier = Modifier
@@ -144,21 +131,25 @@ fun ParkingScreen(
             .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.Start) {
 
-            ParkInfo(
-                icon = R.drawable.outline_place_24,
-                info = place?.address!!
-            )
+            if(place?.address != null){
+                ParkInfo(
+                    icon = R.drawable.outline_place_24,
+                    info = place.address!!
+                )
+            }
             
             Spacer(modifier = Modifier.height(16.dp))
 
-            ParkInfo(
-                icon = R.drawable.phone,
-                info = place.phoneNumber!!
-            )
+            if(place?.phoneNumber != null){
+                ParkInfo(
+                    icon = R.drawable.phone,
+                    info = place.phoneNumber!!
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if(place.openingHours != null){
+            if(place?.openingHours != null){
                 for(d in place.openingHours!!.weekdayText){
 
                     //Spliting the day and the hour
@@ -183,6 +174,7 @@ fun ParkingScreen(
                 }
 
                 ParkInfoOpen(dayTime = openDayTime)
+
             }
 
         }
