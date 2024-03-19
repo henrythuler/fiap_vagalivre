@@ -16,12 +16,12 @@ import br.com.thuler.vagalivre.R
 
 @Composable
 fun ParkRating(
-    rating: Double = 0.0,
-    ratingQt: Int = 0
+    rating: Float,
+    ratingQt: Int
 ) {
 
     //If there's a rest in rating divided by one, it means that we have a decimal rating
-    val halfStar = rating % 1 != 0.0
+    var halfStar = rating % 1 != 0.0f
 
     Row(verticalAlignment = Alignment.CenterVertically){
         
@@ -39,7 +39,10 @@ fun ParkRating(
                 painter = if(i <= rating.toInt()){
                     painterResource(id = R.drawable.star)
                 }else{
-                    if(halfStar) painterResource(id = R.drawable.star_half)
+                    if(halfStar) {
+                        halfStar = false
+                        painterResource(id = R.drawable.star_half)
+                    }
                     else painterResource(id = R.drawable.star_outline)
                 },
                 contentDescription = "Avaliação do estacionamento em estrelas",

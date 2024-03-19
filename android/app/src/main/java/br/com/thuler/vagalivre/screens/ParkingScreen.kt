@@ -1,5 +1,7 @@
 package br.com.thuler.vagalivre.screens
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +15,12 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import br.com.thuler.vagalivre.BuildConfig
 import br.com.thuler.vagalivre.R
 import br.com.thuler.vagalivre.components.Header
 import br.com.thuler.vagalivre.components.ImageGallery
@@ -26,20 +30,65 @@ import br.com.thuler.vagalivre.components.ParkInfoOpen
 import br.com.thuler.vagalivre.components.ParkRating
 import br.com.thuler.vagalivre.components.Title
 import br.com.thuler.vagalivre.models.SharedViewModel
-
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPhotoRequest
+import com.google.android.libraries.places.api.net.FetchPhotoResponse
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
+import com.google.android.libraries.places.api.net.PlacesClient
 
 @Composable
-fun ParkingScreen(navController: NavController, username: String, email: String, sharedViewModel: SharedViewModel) {
+fun ParkingScreen(
+    navController: NavController,
+    username: String,
+    email: String,
+    sharedViewModel: SharedViewModel
+) {
 
+    val context = LocalContext.current
     val poi by sharedViewModel.selectedPOI.observeAsState()
 
+    val bitmaps: MutableList<Bitmap> = mutableListOf()
+
     val title = poi?.name ?: "Título Padrão"
-    // val placeId = poi?.placeId ?: ""
-    // TOD0: BUSCAR DADOS DO LOCAL PELO placeId
-    // Instanciar um objeto que contenha todas as informações
-    // Ex: val isOpenNow = objeto.isOpen
+    val place = sharedViewModel.place.value
+
+    Places.initializeWithNewPlacesApiEnabled(context, BuildConfig.MAPS_API_KEY)
+
+    // Specify fields. Requests for photos must always have the PHOTO_METADATAS field.
+    val fields = listOf(Place.Field.PHOTO_METADATAS)
+
+    // Get a Place object (this example uses fetchPlace(), but you can also use findCurrentPlace())
+    val placeRequest = FetchPlaceRequest.newInstance(poi?.placeId!!, fields)
 
 
+    val placesClient: PlacesClient = Places.createClient(context)
+
+    placesClient.fetchPlace(placeRequest)
+        .addOnSuccessListener { response: FetchPlaceResponse ->
+            val place = response.place
+
+            // Get the photo metadata.
+            val metadata = place.photoMetadatas
+            val photoMetadata = metadata
+
+            // Create a FetchPhotoRequest.
+            for(image in photoMetadata!!){
+                val photoRequest = FetchPhotoRequest.builder(image)
+                    .setMaxWidth(150)
+                    .setMaxHeight(150)
+                    .build()
+                placesClient.fetchPhoto(photoRequest)
+                    .addOnSuccessListener { fetchPhotoResponse: FetchPhotoResponse ->
+                        val bitmap = fetchPhotoResponse.bitmap
+                        image
+                    }.addOnFailureListener { exception: Exception ->
+
+                    }
+            }
+
+        }
 
     Column(modifier = Modifier.fillMaxSize()) {
         
@@ -51,21 +100,31 @@ fun ParkingScreen(navController: NavController, username: String, email: String,
             .fillMaxWidth()
             .padding(horizontal = 20.dp)) {
 
-            Title(size = 24.sp, title = title, textAlign = TextAlign.Start)
+            Title(
+                size = 24.sp,
+                title = title,
+                textAlign = TextAlign.Start
+            )
             
             Spacer(modifier = Modifier.height(8.dp))
-            
-            ParkRating(4.5, 274)
+
+            ParkRating(place?.rating!!.toFloat(), place?.userRatingsTotal!!)
             
             Spacer(modifier = Modifier.height(16.dp))
 
-            ParkDetails(closeAt = "18:00", price = 5f,  parkingPlaces = 16)
+            ParkDetails(
+                closeAt = "18:00",
+                price = 5f,
+                parkingPlaces = 16
+            )
             
             Spacer(modifier = Modifier.height(24.dp))
             
-            ImageGallery(images = listOf(R.drawable.park_1, R.drawable.park_2, R.drawable.park_3))
+            ImageGallery(images = listOf(bitmaps))
 
         }
+
+        Log.i("Hours", place?.openingHours?.weekdayText.toString())
 
         HorizontalDivider(
             modifier = Modifier
@@ -82,14 +141,14 @@ fun ParkingScreen(navController: NavController, username: String, email: String,
 
             ParkInfo(
                 icon = R.drawable.outline_place_24,
-                info = "R. Bandeirantes, 7-36 - Centro, Bauru - SP, 17010-260"
+                info = place?.address!!
             )
             
             Spacer(modifier = Modifier.height(16.dp))
 
             ParkInfo(
                 icon = R.drawable.phone,
-                info = "(014) 99679-6700"
+                info = place?.phoneNumber!!
             )
 
             Spacer(modifier = Modifier.height(16.dp))

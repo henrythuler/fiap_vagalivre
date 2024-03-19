@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                             route = "parking/{username}/{email}",
                             arguments = listOf(
                                 navArgument("username") {type = NavType.StringType},
-                                navArgument("email") {type = NavType.StringType}
+                                navArgument("email") {type = NavType.StringType},
                             )
                         ) {
                             val username = it.arguments?.getString("username")
