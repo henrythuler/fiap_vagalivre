@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "br.com.thuler.vagalivre"
+    namespace = "br.com.vagalivre.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "br.com.thuler.vagalivre"
+        applicationId = "br.com.vagalivre.app"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
