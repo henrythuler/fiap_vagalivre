@@ -11,7 +11,8 @@ public class UserController : ControllerBase
     [
         new User { Email = "felipe@email.com", Name = "Felipe Gandra", Password = "felipe123" },
         new User { Email = "bianca@email.com", Name = "Bianca Ravani", Password = "bianca123" },
-        new User { Email = "henry@email.com", Name = "Henry Thuler", Password = "henry123" }
+        new User { Email = "henry@email.com", Name = "Henry Thuler", Password = "henry123" },
+        new User { Email = "joao@email.com", Name = "João dos Santos", Password = "123abc" }
     ];
     
     [HttpPost("login")]
